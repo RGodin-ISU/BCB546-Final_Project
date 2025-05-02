@@ -1,4 +1,9 @@
-# Data Processing Code
+---
+title: "Data Processing Code"
+author: "Ryan Godin, Saman Ghazvini, William Amendola Bye, Jordyn Eovito, Vencke Gruening"
+date: "`r Sys.Date()`"
+output: pdf_document
+---
 
 The following code prepares the raw data from [Chen et al., 2023's](https://doi.org/10.1021/acssynbio.2c00662) *Deep Mutational Scanning of an Oxygen-Independent Fluorescent Protein CreiLOV for Comprehensive Profiling of Mutational and Epistatic Effects* for the analyses used to reproduce the figures. The raw single point mutation code is given in `data/raw/sb2c00662_si_001.xlsx` while the raw combinatorial mutation data is given in `data/raw/sb2c00662_si_002.xlsx`. The processed data is stored in the `data/processed` folder so that it can be loaded for analyses.
 
@@ -22,12 +27,99 @@ For the downstream analyses, the following data needs to be extracted from the e
 2. Wild-type amino acid
 3. Mutant amino acid
 
-### Load the dataset
+### Load the dataset and inspect the file.
 
 ```{R}
 single_mutant_data <- read_excel("data/raw/sb2c00662_si_001.xlsx")
 colnames(single_mutant_data)[1] <- "mutants"
+```
+
+Checking the first few lines, last few lines, and dimensions of the file to see if it loaded correctly.
+
+```{R}
 head(single_mutant_data)
+tail(single_mutant_data)
+dim(single_mutant_data)
+```
+
+### Extract the mutant amino acid position
+
+```{R}
+single_mutant_data <-
+  mutate(
+    single_mutant_data,
+    position = as.integer(str_extract(mutants, "\\d+")),
+)
+head(single_mutant_data[,c("mutants", "position")])
+```
+
+### Extract the wild-type amino acid
+
+The amino acid will be extracted as a one letter code to make the replication of the figures easier. First, we define the table neccessary to convert the three letter to one letter amino acid abbreviation.
+
+```{R}
+conversion_table <- c(
+    Ala = "A", Arg = "R", Asn = "N", Asp = "D", Cys = "C", 
+    Gln = "Q", Glu = "E", Gly = "G", His = "H", Ile = "I", 
+    Leu = "L", Lys = "K", Met = "M", Phe = "F", Pro = "P", 
+    Ser = "S", Thr = "T", Trp = "W", Tyr = "Y", Val = "V"
+)
+```
+
+We now extract the one letter amino acid abbreviation for the wild-type amino acid.
+
+```{R}
+extract_wt_amino_acid <- function(mutant) {
+    mutant <- as.character(mutant)
+    if (mutant == "wt") {
+        return(NA)
+    } else {
+        removed_prefix <- str_remove(mutant, "^p\\.")  # Remove "p." prefix
+        wt_amino_acid_3_letter <- str_extract(removed_prefix, "^[A-Za-z]+")
+        wt_amino_acid_1_letter <- conversion_table[wt_amino_acid_3_letter]
+        return(wt_amino_acid_1_letter)
+    }
+}
+
+single_mutant_data <- mutate(
+    single_mutant_data,
+    wt_amino_acid = sapply(mutants, extract_wt_amino_acid)
+)
+
+head(single_mutant_data[,c("mutants", "position", "wt_amino_acid")])
+```
+
+### Extract the mutant amino acid
+
+**NOTE:** You need to load the conversion table from extracting the wild-type amino acid by running the corresponding code block!
+
+```{R}
+extract_mutant_amino_acid <- function(mutant) {
+    mutant <- as.character(mutant)
+    if (mutant == "wt") {
+        return(NA)
+    } else {
+        removed_prefix <- str_remove(mutant, "^p\\.")  # Remove "p." prefix
+        wt_amino_acid_3_letter <- str_extract(removed_prefix,  "[A-Za-z]+$")
+        wt_amino_acid_1_letter <- conversion_table[wt_amino_acid_3_letter]
+        return(wt_amino_acid_1_letter)
+    }
+}
+
+single_mutant_data <- mutate(
+    single_mutant_data,
+    mutant_amino_acid = sapply(mutants, extract_mutant_amino_acid)
+)
+
+head(single_mutant_data[,c("mutants", "position", "wt_amino_acid", "mutant_amino_acid")])
+```
+
+### Save processed data
+
+The processed single mutant data will be exported to `data/processed/single_mutant_data.csv` so that the single mutant data analysis can be run independently of the data processing.
+
+```{R}
+write.csv(single_mutant_data, file = "data/processed/single_mutant_data.csv", row.names=FALSE)
 ```
 
 ## Double Mutation Data Processing

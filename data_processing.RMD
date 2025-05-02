@@ -1,0 +1,33 @@
+# Data Processing Code
+
+The following code prepares the raw data from [Chen et al., 2023's](https://doi.org/10.1021/acssynbio.2c00662) *Deep Mutational Scanning of an Oxygen-Independent Fluorescent Protein CreiLOV for Comprehensive Profiling of Mutational and Epistatic Effects* for the analyses used to reproduce the figures. The raw single point mutation code is given in `data/raw/sb2c00662_si_001.xlsx` while the raw combinatorial mutation data is given in `data/raw/sb2c00662_si_002.xlsx`. The processed data is stored in the `data/processed` folder so that it can be loaded for analyses.
+
+The following libraries are needed for the data processing.
+
+```{R}
+rm(list = ls())
+library(tidyr)
+library(tidyverse)
+library(readxl)
+library(pbapply)
+library(openxlsx)
+library(scales)
+```
+
+## Single Mutation Data Processing
+
+For the downstream analyses, the following data needs to be extracted from the entries and added as columns to the dataframe:
+
+1. Mutation position
+2. Wild-type amino acid
+3. Mutant amino acid
+
+### Load the dataset
+
+```{R}
+single_mutant_data <- read_excel("data/raw/sb2c00662_si_001.xlsx")
+colnames(single_mutant_data)[1] <- "mutants"
+head(single_mutant_data)
+```
+
+## Double Mutation Data Processing

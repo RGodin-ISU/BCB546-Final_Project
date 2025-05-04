@@ -10,11 +10,12 @@ This code tries to reproduce a select portion of figures from [Chen et al., 2023
 The following libraries are needed for the data processing.
 
 ```{R}
-rm(list = ls())
+#rm(list = ls())
 library(tidyr)
 library(tidyverse)
 library(ggbeeswarm)
 library(ggplot2)
+library(ggpmisc)
 ```
 
 ## Figure Reproduction
@@ -38,3 +39,117 @@ tail(combinatorial_mutation_data)
 dim(combinatorial_mutation_data)
 ```
 
+### Generate Figure 1B
+
+We first calculate the $R$ correlation coefficient and the regression equation so we can annotate the ggplots with them.
+
+```{R}
+# Calculate regression data and make labels for plots
+regression_12 <- lm(single_mutant_data$rep1 ~ single_mutant_data$rep2)
+slope_12 <- coef(regression_12)[2]
+r_12 <- cor(single_mutant_data$rep1, single_mutant_data$rep2, use = "complete.obs")
+r_label_12 <- paste("italic(R) == ", format(round(r_12, 3), nsmall = 3))
+eq_12 <- paste("y == ", round(slope_12, 3), " * x", sep = "")
+
+regression_13 <- lm(single_mutant_data$rep1 ~ single_mutant_data$rep3)
+slope_13 <- coef(regression_13)[2]
+r_13 <- cor(single_mutant_data$rep1, single_mutant_data$rep3, use = "complete.obs")
+r_label_13 <- paste("italic(R) == ", format(round(r_13, 3), nsmall = 3))
+eq_13 <- paste("y == ", round(slope_13, 3), " * x", sep = "")
+
+regression_23 <- lm(single_mutant_data$rep3 ~ single_mutant_data$rep2)
+slope_23 <- coef(regression_23)[2]
+r_23 <- cor(single_mutant_data$rep2, single_mutant_data$rep3, use = "complete.obs")
+r_label_23 <- paste("italic(R) == ", format(round(r_23, 3), nsmall = 3))
+eq_23 <- paste("y == ", round(slope_23, 3), " * x", sep = "")
+```
+
+We next generate the annotated figures and save the subplots to `figures/fig_1b`.
+
+```{R}
+fig_1b_1 <- ggplot(single_mutant_data, aes(x = rep1, y = rep2)) +
+  geom_point() +
+  geom_smooth(method = "lm", col = "blue") +
+  annotate(
+    "text",
+    x = min(single_mutant_data$rep1),
+    y = max(single_mutant_data$rep2),
+    label = eq_12,
+    parse = TRUE,
+    hjust = 0,
+    vjust = 1,
+    size = 4
+  ) +
+  annotate(
+    "text",
+    x = min(single_mutant_data$rep1),
+    y = max(single_mutant_data$rep2) - 2000,
+    label = r_label_12,
+    parse = TRUE,
+    hjust = 0,
+    vjust = 1,
+    size = 4
+  ) +
+  labs(title = "Regression Plot for Replicate 1 vs Replicate 2", x = "Replicate 1", y = "Replicate 2")
+
+fig_1b_2 <- ggplot(single_mutant_data, aes(x = rep1, y = rep3)) +
+  geom_point() +
+  geom_smooth(method = "lm", col = "green") +
+  annotate(
+    "text",
+    x = min(single_mutant_data$rep1),
+    y = max(single_mutant_data$rep3),
+    label = eq_13,
+    parse = TRUE,
+    hjust = 0,
+    vjust = 1,
+    size = 4
+  ) +
+  annotate(
+    "text",
+    x = min(single_mutant_data$rep1),
+    y = max(single_mutant_data$rep3) - 2000,
+    label = r_label_13,
+    parse = TRUE,
+    hjust = 0,
+    vjust = 1,
+    size = 4
+  ) +
+  labs(title = "Regression Plot for Replicate 1 vs Replicate 3", x = "Replicate 1", y = "Replicate 3")
+
+fig_1b_3 <- ggplot(single_mutant_data, aes(x = rep2, y = rep3)) +
+  geom_point() +
+  geom_smooth(method = "lm", col = "red") +
+  annotate(
+    "text",
+    x = min(single_mutant_data$rep2),
+    y = max(single_mutant_data$rep3),
+    label = eq_23,
+    parse = TRUE,
+    hjust = 0,
+    vjust = 1,
+    size = 4
+  ) +
+  annotate(
+    "text",
+    x = min(single_mutant_data$rep2),
+    y = max(single_mutant_data$rep3) - 2000,
+    label = r_label_23,
+    parse = TRUE,
+    hjust = 0,
+    vjust = 1,
+    size = 4
+  ) +
+  labs(title = "Regression Plot for Replicate 2 vs Replicate 3", x = "Replicate 2", y = "Replicate 3")
+
+
+# Print and save the plots and associated data.
+print(fig_1b_1)
+ggsave("figures/fig_1b/fig_1b_1.png", plot = fig_1b_1)
+
+print(fig_1b_2)
+ggsave("figures/fig_1b/fig_1b_2.png", plot = fig_1b_2)
+
+print(fig_1b_3)
+ggsave("figures/fig_1b/fig_1b_3.png", plot = fig_1b_3)
+```

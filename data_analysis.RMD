@@ -333,6 +333,47 @@ fig_3a <- ggplot(filtered_table_s1_graph, aes(x=factor(position), y=mean)) +
   ) +
   labs(x = "Positions in CreiLOV Protein", y = "Fluorescence")
 
-print(fig_3a)
 ggsave("figures/fig_3a.png", fig_3a, width = 7, height = 2)
+print(fig_3a)
+```
+
+### Reproducing Figure 3B
+
+The authors combined the replicates for the fluorescence measurement when genrating Figure 3B, so we must first process the data using pivot longer before we can reproduce the figure.
+
+```{R}
+combinatorial_mutation_data_long <- pivot_longer(
+    combinatorial_mutation_data, cols = c("Rep1", "Rep2", "Rep3"),  
+    names_to = "replicate",
+    values_to = "value"
+)
+
+head(combinatorial_mutation_data_long)
+dim(combinatorial_mutation_data_long)
+```
+
+We are now ready to generate the figure.
+
+```{R}
+combinatorial_mutation_data_long$mutation_count <- factor(
+  combinatorial_mutation_data_long$mutation_count
+)
+
+fig_3b <- ggplot(
+  combinatorial_mutation_data_long,
+  aes(x = mutation_count, y = value, fill = mutation_count)
+) +
+  geom_violin() +
+  geom_boxplot(width = 0.1,
+               color = "black",
+               outlier.shape = NA) +
+  theme_bw() +
+  scale_y_log10() +
+  scale_x_discrete(labels = c("0" = "WT")) +
+  labs(x = "Number of Mutated Residues", y = "Fluorescence", title = "Figure 3B. Replicate") +
+  theme(legend.position = "none")
+
+
+ggsave("figures/fig_3b.png", plot = fig_3b, width = 10, height = 6)  # Adjust width and height here
+print(fig_3b)
 ```

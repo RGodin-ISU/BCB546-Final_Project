@@ -16,6 +16,7 @@ library(tidyverse)
 library(ggbeeswarm)
 library(ggplot2)
 library(ggpmisc)
+library(scales)
 ```
 
 ## Figure Reproduction
@@ -272,4 +273,18 @@ fig_2b_heatmap <-  ggplot(df_parsed, aes(x = position, y = mutant_amino_acid, fi
 
 ggsave("figures/fig_2b_heatmap.png", plot = fig_2b_heatmap,width = 10, height = 6)
 print(fig_2b_heatmap)
+```
+
+We next generate the figure for the second part of Figure 2B.
+
+```{R}
+fig_2b_lower <- ggplot(single_mutant_data, mapping = aes(x = as.factor(position), y = mean)) + 
+  geom_boxplot(fill = "black", outlier.shape = NA) + scale_x_discrete(breaks = seq(10, 110, by = 10)) + 
+  xlab("Position in CreiLOV Protein") + ylab("Fluorescence") + scale_y_log10(
+    breaks = c(1e3, 1e4),
+    labels = scales::trans_format("log10", math_format(10^.x))
+  ) + 
+  theme_classic()
+
+ggsave("figures/fig_2b_lower.png", fig_2b_lower, width = 16, height = 2)
 ```

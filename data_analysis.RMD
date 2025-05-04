@@ -13,6 +13,8 @@ The following libraries are needed for the data processing.
 rm(list = ls())
 library(tidyr)
 library(tidyverse)
+library(ggbeeswarm)
+library(ggplot2)
 ```
 
 ## Figure Reproduction
@@ -35,3 +37,4 @@ head(combinatorial_mutation_data)
 tail(combinatorial_mutation_data)
 dim(combinatorial_mutation_data)
 ```
+

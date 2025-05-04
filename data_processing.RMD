@@ -180,3 +180,60 @@ head(combinatorial_mutation_data[,c("mutants","mutation_count")])
 tail(combinatorial_mutation_data[,c("mutants","mutation_count")])
 ```
 
+### Calculate expected fluorescence
+
+To calculate the expected fluorescence for the combinatorial mutants, we extract the mean log fluorescence for the single mutants and use the following formula provided in the paper where $F_{\mathrm{com}}$, $F_{\mathrm{sin}}$, and $F_{\mathrm{wt}}$ are the log-fluorescence values of combinatorial mutant, single mutant, and WT CreiLOV, respectively.
+$$e=\left(F_{\mathrm{com}}-F_{\mathrm{wt}}\right)-\Sigma\left(F_{\mathrm{sin}}-F_{\mathrm{wt}}\right)$$
+
+**Note:** This calculation takes some time for the 160,000 mutants. To speed up this calculation, we extract the single mutant data first and store them so that the program doesn't have to search through 160,000 entries when extracting the single mutants. This sped up runtime from 20 min to 1 min. However, we still include a progress bar for the calculation using `papply` so that progress can be tracked.
+
+```{R}
+extracted_single_mutants <- filter(combinatorial_mutation_data, mutation_count < 2)
+dim(extracted_single_mutants)
+
+get_single_fluorescence <- function(mutation, mutation_data){
+    single_mutation_row <- which(mutation_data[[1]] == mutation)
+    return(mutation_data[single_mutation_row,"mean_log"])
+}
+
+get_expected_fluorescence <- function(mutation_list, mutation_data){
+    mutation_list <- as.character(mutation_list)
+    mutations_vector <- trimws(strsplit(mutation_list, ",")[[1]])
+    single_mutant_fluorescence <- sapply(mutations_vector, get_single_fluorescence, mutation_data = mutation_data)
+    wild_type_fluorescence <- mutation_data[1,"mean_log"]
+    expected_fluorescence <- sum(single_mutant_fluorescence[[1]] - wild_type_fluorescence) + wild_type_fluorescence
+    return(expected_fluorescence[[1]])
+}
+
+combinatorial_mutation_data <- mutate(
+    combinatorial_mutation_data, expected_fluorescence = pbapply::pbsapply(mutants,get_expected_fluorescence, mutation_data = extracted_single_mutants)
+)
+
+head(combinatorial_mutation_data[,c("mutants","mean_log", "expected_fluorescence")])
+tail(combinatorial_mutation_data[,c("mutants","mean_log", "expected_fluorescence")])
+```
+
+### Calculate epistasis
+
+We now calculate the level of epistasis (difference betweene expected and observed fluorescence).
+
+```{R}
+combinatorial_mutation_data <- mutate(
+    combinatorial_mutation_data, epistasis = mean_log - expected_fluorescence
+)
+
+head(combinatorial_mutation_data[,c("mutants","mean_log", "expected_fluorescence", "epistasis")])
+tail(combinatorial_mutation_data[,c("mutants","mean_log", "expected_fluorescence", "epistasis")])
+```
+
+### Save processed data
+
+Like the processed single mutant data, the processed combinatorial mutation data will be exported to `data/processed/combinatorial_mutant_data.csv` so that the data analysis can be run independently of the data processing.
+
+```{R}
+write.csv(combinatorial_mutation_data, file = "data/processed/combinatorial_mutant_data.csv", row.names=FALSE)
+```
+
+## Analyze Data
+
+Now that the raw data has been processed, the data analysis (figure generation) can now be performed using the designated RMD file: `data_analysis.RMD`.

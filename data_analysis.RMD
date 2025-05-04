@@ -39,7 +39,7 @@ tail(combinatorial_mutation_data)
 dim(combinatorial_mutation_data)
 ```
 
-### Generate Figure 1B
+### Reproducing Figure 1B
 
 We first calculate the $R$ correlation coefficient and the regression equation so we can annotate the ggplots with them.
 
@@ -152,4 +152,47 @@ ggsave("figures/fig_1b/fig_1b_2.png", plot = fig_1b_2)
 
 print(fig_1b_3)
 ggsave("figures/fig_1b/fig_1b_3.png", plot = fig_1b_3)
+```
+
+### Reproducing Figure 2A
+
+We first load the target wild-type value so that it can be highlighted in the histogram.
+
+```{R}
+target_value <- single_mutant_data[1,"log_mean"]
+print(target_value)
+```
+
+We next generate and format the histogram.
+
+```{R}
+## Plot and format the histogram to see if it looks like the paper.
+fig_2a <- ggplot(single_mutant_data, aes(x = log_mean, y = after_stat(ndensity))) +
+  geom_histogram(
+    aes(fill = after_stat(xmin) <= target_value &
+          after_stat(xmax) > target_value),
+    bins = 47,
+    color = "black"
+  ) +
+  scale_fill_manual(values = c("TRUE" = "red", "FALSE" = "black"),
+                    guide = "none") +
+  labs(x = "Fluorescence (log)", y = "Frequency") +
+  scale_x_continuous(
+    limits = c(2, 5),
+    breaks = seq(2, 5, by = 0.5),
+    labels = sprintf("%.2f", seq(2, 5, by = 0.5)),
+    expand = c(0, 0)
+  ) +
+  scale_y_continuous(expand = c(0, 0)) +
+  theme_classic() +
+  theme(
+    axis.text = element_text(size = 14, color = "black"),
+    axis.title = element_text(size = 16, color = "black"),
+    axis.ticks = element_line(color = "black", size = 0.8),
+    axis.ticks.length = unit(0.3, "cm"),
+    axis.line = element_line(color = "black", size = 0.8)
+  )
+
+print(fig_2a)
+ggsave("figures/fig_2a.png", plot = fig_2a)
 ```

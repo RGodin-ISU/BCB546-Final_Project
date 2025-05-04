@@ -2,6 +2,7 @@
 # Edit at https://www.toptal.com/developers/gitignore?templates=macos,python
 
 # User Defined
+figures/
 Scrap/
 Planning/
 itemC218H-RassignmentPseudocode.rmd

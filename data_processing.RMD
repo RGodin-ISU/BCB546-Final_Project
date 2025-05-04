@@ -148,3 +148,35 @@ dim(combinatorial_mutation_data)
 
 
 ### Extract position
+
+We now extract the position for the mutants by extracting them from the first column. Note that for mutants with more than one mutation, it extracts just the last mutation position.
+
+```{R}
+combinatorial_mutation_data$position <- as.integer(gsub(".*[a-zA-Z](\\d+)[a-zA-Z]*", "\\1", combinatorial_mutation_data[[1]]))
+head(combinatorial_mutation_data[,c("mutants", "position")])
+tail(combinatorial_mutation_data[,c("mutants", "position")])
+```
+
+### Extract the number of mutations
+
+The number of mutations is extracted by calculating then number of entries in the mutants column.
+
+```{R}
+count_mutations <- function(mutation_list) {
+    mutation_list <- as.character(mutation_list)
+    if (mutation_list == "wt") {
+        return(0)
+    } else {
+        mutations_vector <- trimws(strsplit(mutation_list, ",")[[1]])
+        return(length(mutations_vector))
+    }
+}
+
+combinatorial_mutation_data <- mutate(
+    combinatorial_mutation_data, mutation_count = sapply(mutants,count_mutations)
+)
+
+head(combinatorial_mutation_data[,c("mutants","mutation_count")])
+tail(combinatorial_mutation_data[,c("mutants","mutation_count")])
+```
+

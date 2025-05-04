@@ -1,0 +1,37 @@
+---
+title: "Data Analysis Code"
+author: "Ryan Godin, Saman Ghazvini, William Amendola Bye, Jordyn Eovito, Vencke Gruening"
+date: "`r Sys.Date()`"
+output: pdf_document
+---
+
+This code tries to reproduce a select portion of figures from [Chen et al., 2023's](https://doi.org/10.1021/acssynbio.2c00662) *Deep Mutational Scanning of an Oxygen-Independent Fluorescent Protein CreiLOV for Comprehensive Profiling of Mutational and Epistatic Effects*. To run this code, please ensure that the raw data from the paper has been processed and saved in `data/processed` by running the code in `data_processing.RMD`.
+
+The following libraries are needed for the data processing.
+
+```{R}
+rm(list = ls())
+library(tidyr)
+library(tidyverse)
+```
+
+## Figure Reproduction
+
+### Load the data
+
+```{R}
+single_mutant_data <- read.csv("data/processed/single_mutant_data.csv")
+combinatorial_mutation_data <- read.csv("data/processed/combinatorial_mutant_data.csv")
+```
+
+Checking the first few lines, last few lines, and dimensions of the file to see if the data loaded correctly.
+
+```{R}
+head(single_mutant_data)
+tail(single_mutant_data)
+dim(single_mutant_data)
+
+head(combinatorial_mutation_data)
+tail(combinatorial_mutation_data)
+dim(combinatorial_mutation_data)
+```

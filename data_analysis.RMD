@@ -377,3 +377,35 @@ fig_3b <- ggplot(
 ggsave("figures/fig_3b.png", plot = fig_3b, width = 10, height = 6)  # Adjust width and height here
 print(fig_3b)
 ```
+
+### Generate Figure 3D
+
+We first extract the data with more than one mutation since the single mutations (and the wild-type) by definition do not have any epistasis. 
+
+```{R}
+multiple_mutation_data <- filter(combinatorial_mutation_data, mutation_count > 1)
+multiple_mutation_data$mutation_count <- factor(
+    multiple_mutation_data$mutation_count
+)
+
+head(multiple_mutation_data[,c("mutants", "epistasis")])
+```
+
+We then use the multiple mutation data to generate the figure.
+
+```{R}
+fig_3d <- ggplot(multiple_mutation_data, 
+    aes(x = mutation_count, y = epistasis)
+) +
+  geom_quasirandom(width = 0.4, size = 0.1, alpha = 0.5) +
+  geom_boxplot(width = 0.1, color = "red", outliers = FALSE) +
+  theme_bw() +
+  ylim(-1.5, 0.5) +
+  labs(x = "Number of Mutated Residues", y = "Fluorescence", title = "Figure 3D. Replicate") +
+  theme(legend.position = "none")
+
+
+
+ggsave("figures/fig_3d.png", plot = fig_3d, width = 10, height = 6)  # Adjust width and height here
+print(fig_3d)
+```

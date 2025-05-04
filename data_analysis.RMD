@@ -91,7 +91,7 @@ fig_1b_1 <- ggplot(single_mutant_data, aes(x = rep1, y = rep2)) +
     vjust = 1,
     size = 4
   ) +
-  labs(title = "Regression Plot for Replicate 1 vs Replicate 2", x = "Replicate 1", y = "Replicate 2")
+  labs(title = "Figure 1B. Replicate (Rep. 1 vs. Rep. 2)", x = "Replicate 1", y = "Replicate 2")
 
 fig_1b_2 <- ggplot(single_mutant_data, aes(x = rep1, y = rep3)) +
   geom_point() +
@@ -116,7 +116,7 @@ fig_1b_2 <- ggplot(single_mutant_data, aes(x = rep1, y = rep3)) +
     vjust = 1,
     size = 4
   ) +
-  labs(title = "Regression Plot for Replicate 1 vs Replicate 3", x = "Replicate 1", y = "Replicate 3")
+  labs(title = "Figure 1B. Replicate (Rep. 1 vs. Rep. 3)", x = "Replicate 1", y = "Replicate 3")
 
 fig_1b_3 <- ggplot(single_mutant_data, aes(x = rep2, y = rep3)) +
   geom_point() +
@@ -141,7 +141,7 @@ fig_1b_3 <- ggplot(single_mutant_data, aes(x = rep2, y = rep3)) +
     vjust = 1,
     size = 4
   ) +
-  labs(title = "Regression Plot for Replicate 2 vs Replicate 3", x = "Replicate 2", y = "Replicate 3")
+  labs(title = "Figure 1B. Replicate (Rep. 2 vs. Rep. 3)", x = "Replicate 2", y = "Replicate 3")
 
 
 # Print and save the plots and associated data.
@@ -177,7 +177,7 @@ fig_2a <- ggplot(single_mutant_data, aes(x = log_mean, y = after_stat(ndensity))
   ) +
   scale_fill_manual(values = c("TRUE" = "red", "FALSE" = "black"),
                     guide = "none") +
-  labs(x = "Fluorescence (log)", y = "Frequency") +
+  labs(x = "Fluorescence (log)", y = "Frequency", title = "Figure 2A. Replicate") + 
   scale_x_continuous(
     limits = c(2, 5),
     breaks = seq(2, 5, by = 0.5),
@@ -269,7 +269,7 @@ fig_2b_heatmap <-  ggplot(df_parsed, aes(x = position, y = mutant_amino_acid, fi
     legend.position = "right",
     legend.key.height = unit(0.5, "cm")  # Taller legend for better color gradient
   ) +
-  labs(x = "Position", y = "Mutant Amino Acid", title = "Fluorescence Heatmap")
+  labs(x = "Position", y = "Mutant Amino Acid", title = "Figure 2B. Replicate (Heatmap)")
 
 ggsave("figures/fig_2b_heatmap.png", plot = fig_2b_heatmap,width = 10, height = 6)
 print(fig_2b_heatmap)
@@ -280,12 +280,14 @@ We next generate the figure for the second part of Figure 2B.
 ```{R}
 fig_2b_lower <- ggplot(single_mutant_data, mapping = aes(x = as.factor(position), y = mean)) + 
   geom_boxplot(fill = "black", outlier.shape = NA) + scale_x_discrete(breaks = seq(10, 110, by = 10)) + 
-  xlab("Position in CreiLOV Protein") + ylab("Fluorescence") + scale_y_log10(
+  scale_y_log10(
     breaks = c(1e3, 1e4),
     labels = scales::trans_format("log10", math_format(10^.x))
   ) + 
+  labs(x = "Positions in CreiLOV Protein", y = "Fluorescence", title = "Figure 2B. Replicate (Lower)") +
   theme_classic()
 
+print(fig_2b_lower)
 ggsave("figures/fig_2b_lower.png", fig_2b_lower, width = 16, height = 2)
 ```
 
@@ -331,9 +333,9 @@ fig_3a <- ggplot(filtered_table_s1_graph, aes(x=factor(position), y=mean)) +
     breaks = c(0, 1e4, 2e4, 3e4), 
     labels = c("0", "1E4", "2E4", "3E4")
   ) +
-  labs(x = "Positions in CreiLOV Protein", y = "Fluorescence")
+  labs(x = "Positions in CreiLOV Protein", y = "Fluorescence", title = "Figure 3A. Replicate")
 
-ggsave("figures/fig_3a.png", fig_3a, width = 7, height = 2)
+ggsave("figures/fig_3a.png", fig_3a, width = 7, height = 2.5)
 print(fig_3a)
 ```
 
@@ -388,7 +390,7 @@ multiple_mutation_data$mutation_count <- factor(
     multiple_mutation_data$mutation_count
 )
 
-head(multiple_mutation_data[,c("mutants", "epistasis")])
+head(multiple_mutation_data[,c("mutants", "epistasis", "strong_epistasis")])
 ```
 
 We then use the multiple mutation data to generate the figure.
@@ -408,4 +410,54 @@ fig_3d <- ggplot(multiple_mutation_data,
 
 ggsave("figures/fig_3d.png", plot = fig_3d, width = 10, height = 6)  # Adjust width and height here
 print(fig_3d)
+```
+
+### Reproducing Figure 3E
+
+We first need to count the proportion of mutations that are strong for a given number of mutations. We then need to reformat the data with pivot longer to generate the frequency figure. The following was used as a reference: https://sparkbyexamples.com/r-programming/group-by-count-in-r/.
+
+**Note:** Requires you to run code block for Figure 3D.
+
+```{R}
+mutation_proportion <- multiple_mutation_data %>%
+  group_by(mutation_count) %>%
+  summarise(
+    strong_prop = sum(strong_epistasis == TRUE) / n(),
+    .groups = "drop"
+  )
+
+
+mutation_proportion <- mutate(mutation_proportion, weak_prop = 1 - strong_prop)
+mutation_proportion_long <- pivot_longer(
+  mutation_proportion, 
+  cols=c("strong_prop", "weak_prop"), 
+  names_to="epistasis_type", 
+  values_to = "value"
+)
+
+head(mutation_proportion)
+head(mutation_proportion_long)
+```
+
+```{R}
+fig_3e <- ggplot(mutation_proportion_long, 
+    aes(x = mutation_count, y = value, fill = epistasis_type)
+  ) +
+  geom_bar(stat = "identity", position = position_dodge(width = 0.8), width = 0.7) +
+  labs(x = "mutation_count", y = "value", ) +
+  labs(x = "Number of Mutated Residues", 
+    y = "Fraction of sampled genotypes", 
+    title = "Figure 3E. Replicate", 
+    fill = "Epistasis Type"
+  ) +
+  scale_fill_manual(
+    name = "Epistasis Type",
+    values = c("strong_prop" = "#e16c5c", "weak_prop" = "#2ecddb"),
+    labels = c("strong_prop" = "Strong", "weak_prop" = "Weak")
+  ) + 
+  theme_minimal()
+
+
+ggsave("figures/fig_3e.png", plot = fig_3e, width = 10, height = 6)
+print(fig_3e)
 ```

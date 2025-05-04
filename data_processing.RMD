@@ -226,6 +226,17 @@ head(combinatorial_mutation_data[,c("mutants","mean_log", "expected_fluorescence
 tail(combinatorial_mutation_data[,c("mutants","mean_log", "expected_fluorescence", "epistasis")])
 ```
 
+### Identify mutants with strong epistasis
+
+```{R}
+combinatorial_mutation_data <- mutate(
+    combinatorial_mutation_data, strong_epistasis = abs(epistasis) > 0.6
+)
+
+head(combinatorial_mutation_data[,c("mutants","mean_log", "epistasis", "strong_epistasis")])
+tail(combinatorial_mutation_data[,c("mutants","mean_log", "epistasis", "strong_epistasis")])
+```
+
 ### Save processed data
 
 Like the processed single mutant data, the processed combinatorial mutation data will be exported to `data/processed/combinatorial_mutant_data.csv` so that the data analysis can be run independently of the data processing.

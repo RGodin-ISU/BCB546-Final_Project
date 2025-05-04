@@ -123,3 +123,28 @@ write.csv(single_mutant_data, file = "data/processed/single_mutant_data.csv", ro
 ```
 
 ## Double Mutation Data Processing
+
+To process the raw combinatorial mutation data, the following data needs to be extracted/calculated from the raw mutation data.
+
+1. The position of the mutation.
+2. Number of mutations.
+3. Expected fluorescence based on summing the effects of the individual mutations.
+4. Level of Epistasis.
+
+We first load the raw combinatorial mutation datast.
+
+```{R}
+combinatorial_mutation_data <- read_excel("data/raw/sb2c00662_si_002.xlsx")
+colnames(combinatorial_mutation_data)[1] <- "mutants"
+```
+
+Checking the first few lines, last few lines, and dimensions of the file to see if it loaded correctly.
+
+```{R}
+head(combinatorial_mutation_data)
+tail(combinatorial_mutation_data)
+dim(combinatorial_mutation_data)
+```
+
+
+### Extract position

@@ -144,14 +144,14 @@ fig_1b_3 <- ggplot(single_mutant_data, aes(x = rep2, y = rep3)) +
 
 
 # Print and save the plots and associated data.
-print(fig_1b_1)
 ggsave("figures/fig_1b/fig_1b_1.png", plot = fig_1b_1)
+print(fig_1b_1)
 
-print(fig_1b_2)
 ggsave("figures/fig_1b/fig_1b_2.png", plot = fig_1b_2)
+print(fig_1b_2)
 
-print(fig_1b_3)
 ggsave("figures/fig_1b/fig_1b_3.png", plot = fig_1b_3)
+print(fig_1b_3)
 ```
 
 ### Reproducing Figure 2A
@@ -193,6 +193,83 @@ fig_2a <- ggplot(single_mutant_data, aes(x = log_mean, y = after_stat(ndensity))
     axis.line = element_line(color = "black", size = 0.8)
   )
 
-print(fig_2a)
 ggsave("figures/fig_2a.png", plot = fig_2a)
+print(fig_2a)
+```
+
+### Reproducing Figure 2B
+
+We first extract the necessary data and format it for the heatmap.
+
+```{R}
+# Restrict positions to 1-120 and drops those with invalid amino acids.
+df_parsed <- filter(
+  single_mutant_data,
+  position >= 1,
+  position <= 120,
+  !is.na(wt_amino_acid),
+  !is.na(mutant_amino_acid)
+)
+
+# Custom amino acid order for Y-axis
+aa_order <- c(
+  'P',
+  'G',
+  'F',
+  'W',
+  'Y',
+  'A',
+  'I',
+  'L',
+  'V',
+  'C',
+  'M',
+  'N',
+  'Q',
+  'S',
+  'T',
+  'H',
+  'K',
+  'R',
+  'D',
+  'E'
+)
+
+df_parsed <- df_parsed %>%
+  mutate(mutant_amino_acid = factor(mutant_amino_acid, levels = aa_order)
+)
+```
+
+We then plot the heatmap.
+
+```{R}
+# Plot heatmap with all desired features
+fig_2b_heatmap <-  ggplot(df_parsed, aes(x = position, y = mutant_amino_acid, fill = mean)) +
+  geom_tile(color = "black", linewidth = 0.3) +  # Black borders for tiles
+  scale_fill_gradient2(
+    low = "darkblue",
+    mid = "white",
+    high = "darkred",
+    midpoint = 14803,
+    na.value = "gray80",
+    # Lighter gray for missing values
+    name = "Fluorescence"
+  ) +
+  theme_minimal() +
+  coord_fixed() +  # Makes tiles square
+  theme(
+    axis.text.x = element_text(
+      angle = 90,
+      vjust = 0.5,
+      hjust = 1,
+      size = 7
+    ),
+    axis.text.y = element_text(size = 4, face = "bold"),
+    legend.position = "right",
+    legend.key.height = unit(0.5, "cm")  # Taller legend for better color gradient
+  ) +
+  labs(x = "Position", y = "Mutant Amino Acid", title = "Fluorescence Heatmap")
+
+ggsave("figures/fig_2b_heatmap.png", plot = fig_2b_heatmap,width = 10, height = 6)
+print(fig_2b_heatmap)
 ```

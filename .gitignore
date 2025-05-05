@@ -7,6 +7,7 @@ Planning/
 itemC218H-RassignmentPseudocode.rmd
 .Rhistory
 *.Rproj
+*.RData
 
 ### macOS ###
 # General

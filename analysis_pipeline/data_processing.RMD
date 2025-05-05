@@ -30,7 +30,7 @@ For the downstream analyses, the following data needs to be extracted from the e
 ### Load the dataset and inspect the file.
 
 ```{R}
-single_mutant_data <- read_excel("data/raw/sb2c00662_si_001.xlsx")
+single_mutant_data <- read_excel("../data/raw/sb2c00662_si_001.xlsx")
 colnames(single_mutant_data)[1] <- "mutants"
 ```
 
@@ -119,7 +119,7 @@ head(single_mutant_data[,c("mutants", "position", "wt_amino_acid", "mutant_amino
 The processed single mutant data will be exported to `data/processed/single_mutant_data.csv` so that the single mutant data analysis can be run independently of the data processing.
 
 ```{R}
-write.csv(single_mutant_data, file = "data/processed/single_mutant_data.csv", row.names=FALSE)
+write.csv(single_mutant_data, file = "../data/processed/single_mutant_data.csv", row.names=FALSE)
 ```
 
 ## Double Mutation Data Processing
@@ -134,7 +134,7 @@ To process the raw combinatorial mutation data, the following data needs to be e
 We first load the raw combinatorial mutation datast.
 
 ```{R}
-combinatorial_mutation_data <- read_excel("data/raw/sb2c00662_si_002.xlsx")
+combinatorial_mutation_data <- read_excel("../data/raw/sb2c00662_si_002.xlsx")
 colnames(combinatorial_mutation_data)[1] <- "mutants"
 ```
 
@@ -242,7 +242,7 @@ tail(combinatorial_mutation_data[,c("mutants","mean_log", "epistasis", "strong_e
 Like the processed single mutant data, the processed combinatorial mutation data will be exported to `data/processed/combinatorial_mutant_data.csv` so that the data analysis can be run independently of the data processing.
 
 ```{R}
-write.csv(combinatorial_mutation_data, file = "data/processed/combinatorial_mutant_data.csv", row.names=FALSE)
+write.csv(combinatorial_mutation_data, file = "../data/processed/combinatorial_mutant_data.csv", row.names=FALSE)
 ```
 
 ## Analyze Data

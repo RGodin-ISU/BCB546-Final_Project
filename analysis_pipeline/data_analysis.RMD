@@ -24,8 +24,8 @@ library(scales)
 ### Load the data
 
 ```{R}
-single_mutant_data <- read.csv("data/processed/single_mutant_data.csv")
-combinatorial_mutation_data <- read.csv("data/processed/combinatorial_mutant_data.csv")
+single_mutant_data <- read.csv("../data/processed/single_mutant_data.csv")
+combinatorial_mutation_data <- read.csv("../data/processed/combinatorial_mutant_data.csv")
 ```
 
 Checking the first few lines, last few lines, and dimensions of the file to see if the data loaded correctly.
@@ -145,13 +145,13 @@ fig_1b_3 <- ggplot(single_mutant_data, aes(x = rep2, y = rep3)) +
 
 
 # Print and save the plots and associated data.
-ggsave("figures/fig_1b/fig_1b_1.png", plot = fig_1b_1)
+ggsave("../figures/fig_1b/fig_1b_1.png", plot = fig_1b_1)
 print(fig_1b_1)
 
-ggsave("figures/fig_1b/fig_1b_2.png", plot = fig_1b_2)
+ggsave("../figures/fig_1b/fig_1b_2.png", plot = fig_1b_2)
 print(fig_1b_2)
 
-ggsave("figures/fig_1b/fig_1b_3.png", plot = fig_1b_3)
+ggsave("../figures/fig_1b/fig_1b_3.png", plot = fig_1b_3)
 print(fig_1b_3)
 ```
 
@@ -194,7 +194,7 @@ fig_2a <- ggplot(single_mutant_data, aes(x = log_mean, y = after_stat(ndensity))
     axis.line = element_line(color = "black", size = 0.8)
   )
 
-ggsave("figures/fig_2a.png", plot = fig_2a)
+ggsave("../figures/fig_2a.png", plot = fig_2a)
 print(fig_2a)
 ```
 
@@ -271,7 +271,7 @@ fig_2b_heatmap <-  ggplot(df_parsed, aes(x = position, y = mutant_amino_acid, fi
   ) +
   labs(x = "Position", y = "Mutant Amino Acid", title = "Figure 2B. Replicate (Heatmap)")
 
-ggsave("figures/fig_2b_heatmap.png", plot = fig_2b_heatmap,width = 10, height = 6)
+ggsave("../figures/fig_2b_heatmap.png", plot = fig_2b_heatmap,width = 10, height = 6)
 print(fig_2b_heatmap)
 ```
 
@@ -288,7 +288,7 @@ fig_2b_lower <- ggplot(single_mutant_data, mapping = aes(x = as.factor(position)
   theme_classic()
 
 print(fig_2b_lower)
-ggsave("figures/fig_2b_lower.png", fig_2b_lower, width = 16, height = 2)
+ggsave("../figures/fig_2b_lower.png", fig_2b_lower, width = 16, height = 2)
 ```
 
 ### Reproducing Figure 3A
@@ -335,7 +335,7 @@ fig_3a <- ggplot(filtered_table_s1_graph, aes(x=factor(position), y=mean)) +
   ) +
   labs(x = "Positions in CreiLOV Protein", y = "Fluorescence", title = "Figure 3A. Replicate")
 
-ggsave("figures/fig_3a.png", fig_3a, width = 7, height = 2.5)
+ggsave("../figures/fig_3a.png", fig_3a, width = 7, height = 2.5)
 print(fig_3a)
 ```
 
@@ -376,7 +376,7 @@ fig_3b <- ggplot(
   theme(legend.position = "none")
 
 
-ggsave("figures/fig_3b.png", plot = fig_3b, width = 10, height = 6)  # Adjust width and height here
+ggsave("../figures/fig_3b.png", plot = fig_3b, width = 10, height = 6)  # Adjust width and height here
 print(fig_3b)
 ```
 
@@ -408,7 +408,7 @@ fig_3d <- ggplot(multiple_mutation_data,
 
 
 
-ggsave("figures/fig_3d.png", plot = fig_3d, width = 10, height = 6)  # Adjust width and height here
+ggsave("../figures/fig_3d.png", plot = fig_3d, width = 10, height = 6)  # Adjust width and height here
 print(fig_3d)
 ```
 
@@ -458,6 +458,6 @@ fig_3e <- ggplot(mutation_proportion_long,
   theme_minimal()
 
 
-ggsave("figures/fig_3e.png", plot = fig_3e, width = 10, height = 6)
+ggsave("../figures/fig_3e.png", plot = fig_3e, width = 10, height = 6)
 print(fig_3e)
 ```

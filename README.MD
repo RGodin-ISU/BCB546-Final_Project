@@ -70,7 +70,7 @@ It requires several R libraries and these are described at the beginning of the 
 
 2. Install dependencies (see above).
 
-3. Run the main analysis script(s):
+3. Run the data processing and data analysis scripts in the [`analysis_pipeline/`](analysis_pipeline/) folder. Examples of the output are provided as PDFs in the folder:
    1. First, run [`analysis_pipeline/data_processing.RMD`](analysis_pipeline/data_processing.RMD) to process the raw data for analysis. The output processed data files are stored in [`data/processed`](data/processed).
    2. Second, run [`analysis_pipeline/data_analysis.RMD`](analysis_pipeline/data_analysis.RMD). The output figures are printed to the terminal but also saved to [`figures/`](figures/) for analysis.
 

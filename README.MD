@@ -65,7 +65,7 @@ It requires several R libraries and these are described at the beginning of the 
 
    ```bash
    git clone https://github.com/RGodin-ISU/BCB546-Final_Project.git
-   cd your-repo-name
+   cd BCB546-Final_Project
    ```
 
 2. Install dependencies (see above).

@@ -25,7 +25,6 @@ This project attempts to reproduce a subset of the main analyses and figures of 
 │   ├── data_analysis.RMD
 │   ├── data_processing.pdf
 │   └── data_processing.RMD
-├── BCB546-Final_Project.Rproj
 ├── chen_et_al-2023.MD
 ├── data
 │   ├── processed

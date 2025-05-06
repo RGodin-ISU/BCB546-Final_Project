@@ -85,5 +85,5 @@ The main figures replicated from the paper are saved in [`figures/`](figures/). 
 
 ## 📝 Notes
 
-- While the overall results are consistent, there are slight differences, likely due to unavailable details. These are described in more detail in [`chen_et_al-2023.MD`](chen_et_al_2023.MD).
+- While the overall results are consistent, there are slight differences, likely due to unavailable details. These are described in more detail in [`chen_et_al-2023.MD`](chen_et_al-2023.MD).
 

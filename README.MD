@@ -10,7 +10,7 @@ This repository contains code, data, and figures for reproducing the results pre
 
 This project attempts to reproduce a subset of the main analyses and figures of the paper. It includes:
 
-- Overview of the paper we are replicating our results ([`Chen_et_al-2023.MD`](Chen_et_al-2023.MD))
+- Overview of the paper we are replicating our results ([`chen_et_al-2023.MD`](chen_et_al-2023.MD))
 - Preprocessed and raw data in ([`data/`](data/))
 - Scripts used for to process the raw data, analyze the data, and plot figures ([`analysis_pipeline/`](analysis_pipeline/))
 - Replicated figures ([`figures/`](figures/))
@@ -26,7 +26,7 @@ This project attempts to reproduce a subset of the main analyses and figures of 
 │   ├── data_processing.pdf
 │   └── data_processing.RMD
 ├── BCB546-Final_Project.Rproj
-├── Chen_et_al-2023.MD
+├── chen_et_al-2023.MD
 ├── data
 │   ├── processed
 │   │   ├── combinatorial_mutant_data.csv
@@ -85,5 +85,5 @@ The main figures replicated from the paper are saved in [`figures/`](figures/). 
 
 ## 📝 Notes
 
-- While the overall results are consistent, there are slight differences, likely due to unavailable details. These are described in more detail in [`Chen_et_al-2023.MD`](Chen_et_al-2023.MD).
+- While the overall results are consistent, there are slight differences, likely due to unavailable details. These are described in more detail in [`chen_et_al-2023.MD`](chen_et_al-2023.MD).
 

@@ -10,7 +10,7 @@ This repository contains code, data, and figures for reproducing the results pre
 
 This project attempts to reproduce a subset of the main analyses and figures of the paper. It includes:
 
-- Overview of the paper we are replicating our results ([`chen_et_al-2023.MD`](chen_et_al-2023.MD))
+- Overview of the paper we are trying to replicate and the results that we obtained ([`chen_et_al-2023.MD`](chen_et_al-2023.MD))
 - Preprocessed and raw data in ([`data/`](data/))
 - Scripts used for to process the raw data, analyze the data, and plot figures ([`analysis_pipeline/`](analysis_pipeline/))
 - Replicated figures ([`figures/`](figures/))

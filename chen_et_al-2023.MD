@@ -37,3 +37,14 @@ In order to replicate figure 3a, more filtering had to be performed on both data
 One issue with reproducing the chart is the apparent lack of a data point for one of these specific mutations - Val107Met. Val107Met is listed in S2 as being one of the 20 selected mutations, but no single mutant value exists for Val107Met in S1. The red highlighted point at position 107, which should correspond to Val107Met is located above the mean wildtype fluoresence line (above 14,000 fluorescence units) but the data point in S2 for Val107Met is only at around 12,000 fluorescence units, indicating they did not use this point for the graph. It is unclear why this point is missing from the data set, as they do not explicitly list out the 20 specified mutants in the paper, rather the list had to be extracted from S2. From the single mutant data in S1, the 19 specified mutants (the 20 listed aside from Val107Met which doesn't exist in S1) were filtered out, so they would not be plotted twice. The selected mutants were filtered from S1 to a separate data frame to be plotted separately in red. The specific plot used wasn't specified, so a boxplot was used to graph the fluorescence at each point for the single-mutant data less the selected mutants. The bars shown in the paper are not error bars, as plotting the mean fluorescence +/- the standard deviation yields a much larger range for the bars, so it's not clear what the original authors had graphed. The mean wildtype fluorescence was plotted as a blue horizontal dashed line on top of the chart, and the selected mutant data points were plotted in red - note the lack of red point at position 107, corresponding to the lack of S1 data for Val107Met. 
 
 Notably, there are data points in the recreated figure lying below the mean fluorescence line that do not exist in the original paper - it is unclear if these are outliers that the authors had removed prior to plotting, but there was no description of their data processing workflow that would indicate any specific type of data trimming. Overall, the reproduction looks very similar to the original figure, but without knowing what type of data trimming the authors did and what type of plot they used, it's difficult to get an exact carbon copy. 
+
+
+### Figure 3B
+
+In this figure, the fluorescence is plotted vs. the number of mutations. It is expected that as the number of mutations increase the fluorescent protein gets further from the wild-type and the likelihood of being fluorescent goes down. This is exactly what is observed with the authors original figure and our replication. They appear to match very closely.
+
+### Figure 3D
+
+
+
+### Figure 3E

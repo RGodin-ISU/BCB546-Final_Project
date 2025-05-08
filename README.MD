@@ -78,6 +78,10 @@ It requires several R libraries and these are described at the beginning of the 
   - [`sb2c00662_si_002.xlsx`](data/raw/sb2c00662_si_002.xlsx) contains activity data for the combinatorial (multi-site) mutations.
 - **Processed data:** See [`data/processed/`](data/processed/). These are derived from the raw data and used in the analysis scripts for figure generation.
 
+### Data Analysis Pipeline
+
+![Data Analysis Pipeline](data_analysis_flowchart.png)
+
 ## 📊 Figures
 
 The main figures replicated from the paper are saved in [`figures/`](figures/). Each figure is labeled corresponding to the figure number in the paper, e.g., `fig_1b.png`.

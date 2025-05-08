@@ -21,31 +21,32 @@ This project attempts to reproduce a subset of the main analyses and figures of 
 ```
 .
 ├── analysis_pipeline
-│   ├── data_analysis.pdf
-│   ├── data_analysis.RMD
-│   ├── data_processing.pdf
-│   └── data_processing.RMD
+│   ├── data_analysis.pdf
+│   ├── data_analysis.RMD
+│   ├── data_processing.pdf
+│   └── data_processing.RMD
 ├── chen_et_al-2023.MD
 ├── data
-│   ├── processed
-│   │   ├── combinatorial_mutant_data.csv
-│   │   └── single_mutant_data.csv
-│   └── raw
-│       ├── sb2c00662_si_001.xlsx
-│       └── sb2c00662_si_002.xlsx
+│   ├── processed
+│   │   ├── combinatorial_mutant_data.csv
+│   │   └── single_mutant_data.csv
+│   └── raw
+│       ├── sb2c00662_si_001.xlsx
+│       └── sb2c00662_si_002.xlsx
+├── data_analysis_flowchart.png
 ├── figures
-│   ├── fig_1b
-│   │   ├── fig_1b_1.png
-│   │   ├── fig_1b_2.png
-│   │   └── fig_1b_3.png
-│   ├── fig_2a.png
-│   ├── fig_2b_heatmap.png
-│   ├── fig_2b_lower.png
-│   ├── fig_3a.png
-│   ├── fig_3b.png
-│   ├── fig_3d.png
-│   └── fig_3e.png
-└── README.MD
+│   ├── fig_1b
+│   │   ├── fig_1b_1.png
+│   │   ├── fig_1b_2.png
+│   │   └── fig_1b_3.png
+│   ├── fig_2a.png
+│   ├── fig_2b_heatmap.png
+│   ├── fig_2b_lower.png
+│   ├── fig_3a.png
+│   ├── fig_3b.png
+│   ├── fig_3d.png
+│   └── fig_3e.png
+├── README.MD
 ```
 
 ## 📦 Requirements

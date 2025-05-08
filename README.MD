@@ -46,7 +46,7 @@ This project attempts to reproduce a subset of the main analyses and figures of 
 │   ├── fig_3b.png
 │   ├── fig_3d.png
 │   └── fig_3e.png
-├── README.MD
+└── README.MD
 ```
 
 ## 📦 Requirements

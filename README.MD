@@ -73,7 +73,9 @@ It requires several R libraries and these are described at the beginning of the 
 
 ## 📁 Data
 
-- **Raw data:** See [`data/raw/`](data/raw/). These are the original datasets as described in the paper.
+- **Raw data:** See [`data/raw/`](data/raw/). These are the original datasets as described in the paper. 
+  - [`sb2c00662_si_001.xlsx`](data/raw/sb2c00662_si_001.xlsx) contains activity data for single point mutations.
+  - [`sb2c00662_si_002.xlsx`](data/raw/sb2c00662_si_002.xlsx) contains activity data for the combinatorial (multi-site) mutations.
 - **Processed data:** See [`data/processed/`](data/processed/). These are derived from the raw data and used in the analysis scripts for figure generation.
 
 ## 📊 Figures

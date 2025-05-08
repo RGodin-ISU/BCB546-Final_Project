@@ -403,7 +403,7 @@ fig_3d <- ggplot(multiple_mutation_data,
   geom_boxplot(width = 0.1, color = "red", outliers = FALSE) +
   theme_bw() +
   ylim(-1.5, 0.5) +
-  labs(x = "Number of Mutated Residues", y = "Fluorescence", title = "Figure 3D. Replicate") +
+  labs(x = "Number of Mutated Residues", y = "Epistasis", title = "Figure 3D. Replicate") +
   theme(legend.position = "none")
 
 

@@ -45,6 +45,12 @@ In this figure, the fluorescence is plotted vs. the number of mutations. It is e
 
 ### Figure 3D
 
+This figure plots the level of epistasis, which is the difference between the observed fluorescence and expected fluorescence from summing the single mutations $e=\left(F_{\mathrm{com}}-F_{\mathrm{wt}}\right)-\Sigma\left(F_{\mathrm{sin}}-F_{\mathrm{wt}}\right)$, vs. the number of mutations. As expected the ability to predict the fluorescence gets harder the more mutations there are since they can interact with each other in unexpected ways. This is seen for the author's original figure and our figure. 
 
+However, our figure does not completely line up with theirs. Specifically, there are more mutants with positive epistasis with the epsistasis appearing to be shifted up overall. We are unsure of the cause of this discrepancy.
 
 ### Figure 3E
+
+This figure plots the strength of epistasis vs. the number of mutations. As expected the number of strong negative epistatic interactions get larger the more mutations there are. This is expected as the effect of mutations get harder to predict the more there are. It is also less likely the protein is fluorescent the farther it gets from the wild type. This is seen for the author's original figure and our figure which appear to match very closely.
+
+

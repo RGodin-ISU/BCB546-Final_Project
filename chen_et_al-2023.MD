@@ -26,13 +26,15 @@ Since the paper didn’t mention what bin size was used for the histogram, the b
  
 The replicated figure closely matches the original in terms of overall shape and distribution. One key difference is on the y-axis: although the original figure labels it as "frequency," the axis only goes up to approximately 0.3, which does not align with raw counts. To address this, density was used when plotting the replicated figure, which resulted in the y-axis extending up to 1. The discrepancy between the two figures may be due to custom scaling or normalization of the density values in the original figure, which was not described in the paper. It is possible that the original figure plotted relative frequency (counts divided by the total number of observations) rather than absolute counts or density. Additionally, some plotting functions normalize histograms so that the area under the histogram equals 1 (probability density), while others normalize so that the sum of bar heights equals 1 (relative frequency). These two approaches produce slightly different bar heights. Several options were tested, including plotting density (after_stat(density)), frequency, and normalized count (after_stat(ncount)), but none of them replicated the exact y-axis scaling (0.3) seen in the original figure.
 
-### Figure 2B (heatmap)
+### Figure 2B
 
-Figure 2B (upper panel): In order to replicate figure 2, mutations and fluorescence data were extracted from data set 1. The mutation data was parsed to extract the wildtype amino acid and positions, and the mutant amino acid and positions. Next, three letter amino acid codes were converted to one letter codes (for example “Arg”=”R”). The order of amino acids for the Y-axis was determined based on original figure. Heatmap was plotted using the ggplot function and WT fluorescence value was set as the median (white color), maximum fluorescence value was set to red and minimum was set to blue.
+#### Heatmap
+
+In order to replicate figure 2, mutations and fluorescence data were extracted from data set 1. The mutation data was parsed to extract the wildtype amino acid and positions, and the mutant amino acid and positions. Next, three letter amino acid codes were converted to one letter codes (for example “Arg”=”R”). The order of amino acids for the Y-axis was determined based on original figure. Heatmap was plotted using the ggplot function and WT fluorescence value was set as the median (white color), maximum fluorescence value was set to red and minimum was set to blue.
 
 The heatmap appears to be overall consistent, with similar patterns emerging at positions 25, 45, and 70 for example.
 
-### Figure 2B (lower panel)
+#### Lower panel
 
 In order to replicate the lower panel of figure 2b, first the mutation position numbers needed to be extracted from data set S1, which contains the single mutant data. A regular expression was used to extract the position number from the mutant name string, and this was saved as a new column in the data frame. As the mean fluorescence from each of the three replicates was already calculated as a column, the next step was to plot a boxplot of mean fluorescence values at each position in the protein. The position was used as a factor when plotting in order to group data for each position together, which resulted in a near-identical recreation of the original plot. 
 

@@ -2,8 +2,8 @@
 # Edit at https://www.toptal.com/developers/gitignore?templates=macos,python
 
 # User Defined
-Scrap/
-Planning/
+scrap/
+planning/
 itemC218H-RassignmentPseudocode.rmd
 .Rhistory
 *.Rproj

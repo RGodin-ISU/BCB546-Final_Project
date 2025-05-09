@@ -57,6 +57,29 @@ This project was written in R and was run in Rstudio Version 2024.12.1+563 (2024
 It requires several R libraries and these are described at the beginning of the [`analysis_pipeline/data_processing.RMD`](analysis_pipeline/data_processing.RMD) and [`analysis_pipeline/data_analysis.RMD`](analysis_pipeline/data_analysis.RMD) scripts.
 
 
+### Required Libaries (and Versions Used)
+
+| Package     | Version  |
+|-------------|----------|
+| scales      | 1.3.0    |
+| openxlsx    | 4.2.8    |
+| pbapply     | 1.7.2    |
+| readxl      | 1.4.3    |
+| lubridate   | 1.9.4    |
+| forcats     | 1.0.0    |
+| stringr     | 1.5.1    |
+| dplyr       | 1.1.4    |
+| purrr       | 1.0.4    |
+| readr       | 2.1.5    |
+| tibble      | 3.2.1    |
+| ggplot2     | 3.5.1    |
+| tidyverse   | 2.0.0    |
+| tidyr       | 1.3.1    |
+| ggpmisc     | 0.6.1    |
+| ggpp        | 0.5.8.1  |
+| ggbeeswarm  | 0.7.2    |
+
+
 ## How to Reproduce
 
 1. Clone this repository:

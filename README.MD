@@ -59,7 +59,7 @@ It requires several R libraries and these are described at the beginning of the 
 
 ### Required Libaries (and Versions Used)
 
-| Package     | Version  |
+| Library     | Version  |
 |-------------|----------|
 | scales      | 1.3.0    |
 | openxlsx    | 4.2.8    |
